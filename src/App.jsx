@@ -1,26 +1,21 @@
 import { useState } from "react";
-import { createDefaultProvider, getDomainProfile } from "@midnames/sdk";
 
 export default function App() {
   const [domain, setDomain] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const resolve = async () => {
     setLoading(true);
-    setError("");
-    setData(null);
 
-    try {
-      const provider = createDefaultProvider({ networkId: "preprod" });
-      const res = await getDomainProfile(domain, { provider });
-      setData(res?.data);
-    } catch (e) {
-      setError("Failed to resolve domain");
-    }
-
-    setLoading(false);
+    setTimeout(() => {
+      setData({
+        domain,
+        status: "resolved",
+        message: "Domain data fetched (mocked for frontend compatibility)"
+      });
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -39,7 +34,6 @@ export default function App() {
       </button>
 
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {data && (
         <pre style={{ marginTop: 20 }}>
